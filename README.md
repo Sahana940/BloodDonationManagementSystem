@@ -1,2 +1,1 @@
-used xampp for implementaion 
-database used is mysql
+Used xampp for implementaion And database used is mysql
