@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Blood Requests - BloodConnectLife</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+  <script src="assets/js/script.js" defer></script>
+</head>
+<body>
+  <nav class="nav-bar">
+    <ul>
+      <li><a href="welcome.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="donors.html">Donor</a></li>
+      <li><a href="requests.html">Request</a></li>
+      <li><a href="hospital.html">Hospital</a></li>
+      <li><a href="search.html">Search</a></li>
+      <li><a href="login.html">Logout</a></li>
+    </ul>
+  </nav>
+  <section>
+    <div class="container">
+  <h2>Blood Request</h2>
+  <form action="backend/request_handler.php" method="post">
+  <input type="text" name="patient_name" placeholder="Patient Name" required>
+  <input type="text" name="hospital_name" placeholder="Hospital Name" required>
+  <input type="text" name="blood_group" placeholder="Blood Group" required>
+  <input type="number" name="units" placeholder="units" required>
+  <button type="submit">Submit Request</button>
+</form>
+
+
+</div>
+  </section>
+</body>
+</html>

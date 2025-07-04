@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Donor List - BloodConnectLife</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+  <script src="assets/js/script.js" defer></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background: #fefefe;
+      padding: 20px;
+    }
+    h2 {
+      color: #c0392b;
+      text-align: center;
+    }
+    form, .donor-list {
+      max-width: 600px;
+      margin: 20px auto;
+      background: white;
+      padding: 15px;
+      border-radius: 8px;
+      box-shadow: 0 0 8px rgba(0,0,0,0.1);
+    }
+    form input, form select {
+      width: 100%;
+      margin: 8px 0;
+      padding: 10px;
+      font-size: 16px;
+    }
+    form button {
+      background-color: #c0392b;
+      color: white;
+      padding: 12px;
+      font-size: 18px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      width: 100%;
+    }
+    form button:hover {
+      background-color: #e74c3c;
+    }
+    .donor-card {
+      border-bottom: 1px solid #ddd;
+      padding: 12px 0;
+    }
+    .donor-card:last-child {
+      border-bottom: none;
+    }
+    .donor-card strong {
+      color: #c0392b;
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav-bar">
+    <ul>
+      <li><a href="welcome.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="donors.html">Donor</a></li>
+      <li><a href="requests.html">Request</a></li>
+      <li><a href="hospital.html">Hospital</a></li>
+      <li><a href="search.html">Search</a></li>
+      <li><a href="login.html">Logout</a></li>
+    </ul>
+  </nav>
+
+<h2>Register as Donor</h2>
+<form id="donorForm">
+  <input type="text" name="name" placeholder="Full Name" required />
+  <input type="email" name="email" placeholder="Email" required />
+  <input type="number" name="age" placeholder="Age" min="18" max="65" required />
+  
+  <select name="gender" required>
+    <option value="" disabled selected>Select Gender</option>
+    <option value="Male">Male</option>
+    <option value="Female">Female</option>
+    <option value="Other">Other</option>
+  </select>
+
+  <select name="blood_group" required>
+    <option value="" disabled selected>Select Blood Group</option>
+    <option value="A+">A+</option>
+    <option value="B+">B+</option>
+    <option value="AB+">AB+</option>
+    <option value="O+">O+</option>
+    <option value="A-">A-</option>
+    <option value="B-">B-</option>
+    <option value="AB-">AB-</option>
+    <option value="O-">O-</option>
+  </select>
+
+  <input type="text" name="phone" placeholder="Phone Number" required />
+  
+  <button type="submit">Register Donor</button>
+</form>
+
+<h2>Registered Donors</h2>
+<div class="donor-list" id="donor-list">
+  <!-- Donor cards will appear here -->
+</div>
+
+<script>
+  async function fetchDonors() {
+    const res = await fetch('backend/donor.php');
+    const donors = await res.json();
+    const container = document.getElementById('donor-list');
+    container.innerHTML = '';
+    donors.forEach(donor => {
+      const div = document.createElement('div');
+      div.className = 'donor-card';
+      div.innerHTML = `
+        <strong>${donor.name}</strong><br/>
+        Age: ${donor.age} | Gender: ${donor.gender}<br/>
+        Blood Group: ${donor.blood_group}<br/>
+        Phone: ${donor.phone}<br/>
+        Email: ${donor.email}
+      `;
+      container.appendChild(div);
+    });
+  }
+
+  document.getElementById('donorForm').addEventListener('submit', async e => {
+    e.preventDefault();
+    const form = e.target;
+    const data = {
+      name: form.name.value,
+      email: form.email.value,
+      age: form.age.value,
+      gender: form.gender.value,
+      blood_group: form.blood_group.value,
+      phone: form.phone.value
+    };
+
+    const res = await fetch('backend/add_donor.php', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(data)
+    });
+
+    const result = await res.json();
+    if(result.success){
+      alert('Donor registered successfully!');
+      form.reset();
+      fetchDonors();
+    } else {
+      alert('Error: ' + (result.error || 'Something went wrong'));
+    }
+  });
+
+  // Initial fetch
+  fetchDonors();
+</script>
+
+</body>
+</html>
