@@ -66,11 +66,12 @@ Role	Access
 Donor	Register/login, update profile, view donation requests
 Hospital	Request blood, manage availability
 Admin	Approve users, assign requests, manage inventory
-
 🚨 Important Disclaimer
+
 This project is for educational purposes only and should not be used as a production medical system without compliance to legal standards such as HIPAA/GDPR.
 
 🚀 Future Enhancements
+
 Add email/SMS alerts for blood requests
 
 Google Maps API integration for nearest donor search
@@ -80,8 +81,10 @@ Mobile application version (Flutter/React Native)
 Enhanced security & role-based authentication
 
 📄 License
+
 This project is open-source under the MIT License.
 
 👩‍💻 Author
+
 Sahana N Shetty
 GitHub: https://github.com/Sahana940
